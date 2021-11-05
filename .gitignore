@@ -28,7 +28,6 @@ out/
 /.gradle
 /.idea
 /gradle
-build.gradle
 gradlew
 gradlew.bat
 HELP.md
