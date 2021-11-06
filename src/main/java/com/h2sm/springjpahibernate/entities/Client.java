@@ -2,10 +2,7 @@ package com.h2sm.springjpahibernate.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -15,8 +12,12 @@ public class Client {
     @Id
     @GeneratedValue
     private int id;
-    private String full_name;
+    @Column(name = "full_name")
+    private String fullName;
+    @Column(name = "passport")
     private String passport;
-    private String tel_name;
+    @Column(name = "tel_name")
+    private String phoneNumber;
+    @Column(name = "date_of_birth")
     private Date date_of_birth;
 }
