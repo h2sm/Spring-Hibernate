@@ -21,4 +21,15 @@ public class Client {
     private String phoneNumber;
     @Column(name = "date_of_birth")
     private Date date_of_birth;
+
+    public Client(String fullName, String passport, String phoneNumber, Date dateOfBirth) {
+        this.fullName=fullName;
+        this.passport=passport;
+        this.phoneNumber=phoneNumber;
+        this.date_of_birth=dateOfBirth;
+    }
+
+    public Client() {
+
+    }
 }
