@@ -10,4 +10,6 @@ public class SpringJpaHibernateApplication {
         SpringApplication.run(SpringJpaHibernateApplication.class, args);
     }
 
+
+
 }
