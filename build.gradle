@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.h2sm'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "16"
 
 repositories {
     mavenCentral()
@@ -33,3 +33,4 @@ test {
 bootRun {
     standardInput = System.in
 }
+targetCompatibility = JavaVersion.VERSION_16
