@@ -11,6 +11,7 @@ import java.sql.Date;
 public class Client {
     @Id
     @GeneratedValue
+    @Column(name = "client_id")
     private int id;
     @Column(name = "full_name")
     private String fullName;
