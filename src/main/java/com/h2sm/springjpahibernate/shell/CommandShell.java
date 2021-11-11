@@ -32,11 +32,9 @@ public class CommandShell {
 
     @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DD
     public void modifyClient(@ShellOption(value = "--id") int id,
-                             @ShellOption(value = "--name") String fullName,
-                             @ShellOption(value = "--pass") String passport,
-                             @ShellOption(value = "--phone") String phoneNumber,
-                             @ShellOption(value = "--date") String dateOfBirth) {
-        service.modifyClient(id, fullName, passport, phoneNumber, dateOfBirth);
+                             @ShellOption(value = "--changeable") String valToChange,
+                             @ShellOption(value = "--value") String value) {
+        //service.modifyClient(id, valToChange, valToChange);
 
     }
 
@@ -47,7 +45,7 @@ public class CommandShell {
                           @ShellOption String dateOfBirth) {
         var x = Arrays.stream(fullName).toList();
 
-        service.addClient(fullName,passport,phoneNumber,dateOfBirth);
+        //service.addClient(fullName,passport,phoneNumber,dateOfBirth);
     }
 
 }

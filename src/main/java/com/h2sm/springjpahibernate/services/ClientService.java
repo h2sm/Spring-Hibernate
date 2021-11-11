@@ -1,11 +1,13 @@
 package com.h2sm.springjpahibernate.services;
 
-import com.h2sm.springjpahibernate.database.ClientRepository;
 import com.h2sm.springjpahibernate.entities.Client;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -14,20 +16,22 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ClientService {
-    private final ClientRepository clientRepository;
-
+    @Autowired
+    private SessionFactory sessionFactory;
     public Optional<Client> findClientByID(int id) {
-        return clientRepository.findById(id);
+
+        var x = sessionFactory.getCurrentSession().get(Client.class, id);
+        System.out.println(x);
+        return null;
     }
 
     public void deleteClientByID(int id) {
-        clientRepository.deleteById(id);
     }
 
     public void addClient(String fullName, String passport, String phoneNumber, String dateOfBirth) {
         var c = new Client(fullName, passport, phoneNumber, convert(dateOfBirth));
-        clientRepository.saveAndFlush(c);
     }
 
     public void modifyClient(int id, String fullName, String passport, String phoneNumber, String dateOfBirth) {
