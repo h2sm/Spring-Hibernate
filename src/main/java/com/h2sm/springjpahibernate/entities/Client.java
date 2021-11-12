@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name="client")
@@ -31,5 +32,13 @@ public class Client {
 
     public Client() {
 
+    }
+
+    public Client updateClient(String fullName, String passport, String phoneNumber, Date dateOfBirth){
+        setPhoneNumber(phoneNumber);
+        setDate_of_birth(dateOfBirth);
+        setFullName(fullName);
+        setPassport(passport);
+        return this;
     }
 }

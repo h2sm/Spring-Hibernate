@@ -19,6 +19,7 @@ public class CommandShell {
     @ShellMethod(value = "get client", key = {"get-cli"})
     public void getClient(@ShellOption int id) {
         var x = service.findClientByID(id);
+        ;
 //        x.ifPresent(System.out::println);
         System.out.println(x);
     }
@@ -32,9 +33,7 @@ public class CommandShell {
     }
 
     @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DD
-    public void modifyClient(@ShellOption(value = "--id") int id,
-                             @ShellOption(value = "--changeable") String valToChange,
-                             @ShellOption(value = "--value") String value) {
+    public void modifyClient(@ShellOption(value = "--id") int id) {
         //service.modifyClient(id, valToChange, valToChange);
 
     }

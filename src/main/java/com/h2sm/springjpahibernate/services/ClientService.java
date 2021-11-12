@@ -30,11 +30,12 @@ public class ClientService {
         s.close();
     }
 
-    public Client findClientByID(int id) {
+    public <T> Optional<T> findClientByID(int id) {
         var s = openSession();
         var client = s.get(Client.class, id);
         closeSession(s);
-        return client;
+        return Optional.of(client);
+        //return client;
         // return sessionFactory.getCurrentSession().get(Client.class, id);
     }
 
