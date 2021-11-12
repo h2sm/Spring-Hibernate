@@ -1,51 +1,45 @@
 package com.h2sm.springjpahibernate.shell;
 
-import com.h2sm.springjpahibernate.services.ClientService;
+import com.h2sm.springjpahibernate.entities.Client;
+import com.h2sm.springjpahibernate.services.database.ClientDBServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Locale;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class CommandShell {
-    private final ClientService service;
+    private final ClientDBServiceImpl service;
 
     @ShellMethod(value = "get client", key = {"get-cli"})
     public void getClient(@ShellOption int id) {
-        var x = service.findClientByID(id);
-        ;
-//        x.ifPresent(System.out::println);
-        System.out.println(x);
+        var x = service.getByID(id);
+        x.ifPresent(System.out::println);
     }
 
     @ShellMethod(value = "delete client", key = {"del-cli"})
     public void deleteClient(@ShellOption int id,
                              @ShellOption boolean sure) {
-        if (sure) service.deleteClientByID(id);
+        if (sure) service.delete(id);
         else System.out.println("You are not sure what ya doing, so no deleting this time");
 
     }
 
     @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DD
     public void modifyClient(@ShellOption(value = "--id") int id) {
-        //service.modifyClient(id, valToChange, valToChange);
+        service.update(id);
 
     }
 
     @ShellMethod(value = "add client", key = {"add-cli"})
-    public void addClient(@ShellOption(arity = 3) String[] fullName,
+    public void addClient(@ShellOption String fullName,
                           @ShellOption String passport,
                           @ShellOption String phoneNumber,
                           @ShellOption String dateOfBirth) {
-        var x = Arrays.stream(fullName).toList();
-
-        //service.addClient(fullName,passport,phoneNumber,dateOfBirth);
+        service.save(new Client(fullName, passport, phoneNumber, dateOfBirth));
     }
 
 }

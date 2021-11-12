@@ -1,6 +1,6 @@
-package com.h2sm.springjpahibernate.services;
+package com.h2sm.springjpahibernate.services.database;
 
-import com.h2sm.springjpahibernate.services.functionality.CRUDFunctions;
+import com.h2sm.springjpahibernate.services.functionality.UpdateFunction;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ClientDBServiceImpl implements ServiceInterface<Client> {
+    private UpdateFunction func = new UpdateFunction();
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -27,9 +28,10 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
-    public void update(Client entity) {
-        var client = getByID(entity.getId()).isPresent() ? CRUDFunctions.updateClient(entity) : null;
-        if (client != null) {
+    public void update(int id) {
+        var clientOptional  = getByID(id);
+        if (clientOptional.isPresent()) {
+            var client = UpdateFunction.updateClient(clientOptional.get());
             var session = sessionFactory.openSession();
             session.beginTransaction();
             session.update(client);
@@ -38,11 +40,15 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
-    public void delete(Client entity) {
-        var session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(entity);
-        commitAndClose(session);
+    public void delete(int id) {
+        var clientOptional = getByID(id);
+        if (clientOptional.isPresent()){
+            var client = clientOptional.get();
+            var session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.delete(client);
+            commitAndClose(session);
+        }
     }
 
     @Override

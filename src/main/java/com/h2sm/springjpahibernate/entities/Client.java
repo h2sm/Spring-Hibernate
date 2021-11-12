@@ -1,10 +1,13 @@
 package com.h2sm.springjpahibernate.entities;
 
 import lombok.Data;
+import lombok.SneakyThrows;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Table(name="client")
@@ -23,22 +26,20 @@ public class Client {
     @Column(name = "date_of_birth")
     private Date date_of_birth;
 
-    public Client(String fullName, String passport, String phoneNumber, Date dateOfBirth) {
+    public Client(String fullName, String passport, String phoneNumber, String dateOfBirth) {
         this.fullName=fullName;
         this.passport=passport;
         this.phoneNumber=phoneNumber;
-        this.date_of_birth=dateOfBirth;
+        this.date_of_birth=convert(dateOfBirth);
     }
 
     public Client() {
 
     }
-
-    public Client updateClient(String fullName, String passport, String phoneNumber, Date dateOfBirth){
-        setPhoneNumber(phoneNumber);
-        setDate_of_birth(dateOfBirth);
-        setFullName(fullName);
-        setPassport(passport);
-        return this;
+    @SneakyThrows
+    private Date convert(String s) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        var date = formatter.parse(s);
+        return new Date(date.getTime());
     }
 }
