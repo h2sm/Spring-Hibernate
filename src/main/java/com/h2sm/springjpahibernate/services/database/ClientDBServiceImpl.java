@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.h2sm.springjpahibernate.entities.Client;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +21,17 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     private UpdateFunction func = new UpdateFunction();
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Override
+    public List<Client> getAll() {
+        var session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Client> criteria = builder.createQuery(Client.class);
+        criteria.from(Client.class);
+        List<Client> data = session.createQuery(criteria).getResultList();
+        return data;
+
+    }
 
     @Override
     public Optional<Client> getByID(int id) {

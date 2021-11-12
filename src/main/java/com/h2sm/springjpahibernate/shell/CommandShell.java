@@ -14,6 +14,12 @@ import java.util.Arrays;
 public class CommandShell {
     private final ClientDBServiceImpl service;
 
+    @ShellMethod(value = "getall clients", key = {"get-all"})
+    public void getAllClients() {
+        var x = service.getAll();
+        x.forEach(System.out::println);
+    }
+
     @ShellMethod(value = "get client", key = {"get-cli"})
     public void getClient(@ShellOption int id) {
         var x = service.getByID(id);
@@ -39,7 +45,11 @@ public class CommandShell {
                           @ShellOption String passport,
                           @ShellOption String phoneNumber,
                           @ShellOption String dateOfBirth) {
-        service.save(new Client(fullName, passport, phoneNumber, dateOfBirth));
+        var c = new Client(fullName, passport, phoneNumber, dateOfBirth);
+        System.out.println(c);
+        service.save(c);
     }
+
+
 
 }

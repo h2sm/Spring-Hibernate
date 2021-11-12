@@ -4,18 +4,18 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
 
 @Entity
-@Table(name="client")
+@Table(name="client", schema = "public")
 @Data
-public class Client {
+public class Client implements Serializable {
     @Id
-    @GeneratedValue
-    @Column(name = "client_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_id", unique = true, nullable = false)
     private int id;
     @Column(name = "full_name")
     private String fullName;
@@ -38,8 +38,9 @@ public class Client {
     }
     @SneakyThrows
     private Date convert(String s) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         var date = formatter.parse(s);
         return new Date(date.getTime());
     }
+
 }
