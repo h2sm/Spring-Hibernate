@@ -43,4 +43,7 @@ public class Client implements Serializable {
         return new Date(date.getTime());
     }
 
+    public void setDate(String date){
+        this.date_of_birth = convert(date);
+    }
 }

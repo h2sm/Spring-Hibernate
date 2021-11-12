@@ -10,6 +10,10 @@ public class UpdateFunction {
         entity.setFullName(ui.read());
         ui.say("Обновите паспорт");
         entity.setPassport(ui.read());
+        ui.say("обновите номер телефона");
+        entity.setPhoneNumber(ui.read());
+        ui.say("обновите дату рождения: dd-MM-yyyy");
+        entity.setDate(ui.read());
         return entity;
     }
 }
