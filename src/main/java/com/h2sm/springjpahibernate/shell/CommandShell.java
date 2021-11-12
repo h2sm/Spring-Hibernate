@@ -19,7 +19,8 @@ public class CommandShell {
     @ShellMethod(value = "get client", key = {"get-cli"})
     public void getClient(@ShellOption int id) {
         var x = service.findClientByID(id);
-        x.ifPresent(System.out::println);
+//        x.ifPresent(System.out::println);
+        System.out.println(x);
     }
 
     @ShellMethod(value = "delete client", key = {"del-cli"})
