@@ -39,22 +39,26 @@ public class ClientService {
     }
 
     public void deleteClientByID(int id) {
-        var client = findClientByID(id);
         var s = openSession();
+        s.beginTransaction();
+        var client = findClientByID(id);
         s.delete(client);
         s.getTransaction().commit();
         closeSession(s);
-//        sessionFactory.getCurrentSession().delete(client);
-//        sessionFactory.getCurrentSession().getTransaction().commit();
     }
 
     public void addClient(String fullName, String passport, String phoneNumber, String dateOfBirth) {
-        var c = new Client(fullName, passport, phoneNumber, convert(dateOfBirth));
-//        sessionFactory.save
-//        sessionFactory.getCurrentSession().load(c);
+        var client = new Client(fullName, passport, phoneNumber, convert(dateOfBirth));
+        var session = openSession();
+        session.beginTransaction();
+        session.save(client);
+        session.getTransaction().commit();
+        closeSession(session);
     }
 
     public void modifyClient(int id, String fullName, String passport, String phoneNumber, String dateOfBirth) {
+        var client = findClientByID(id);
+
 //        findClientByID(id).map(client -> {
 //            client.setFullName(fullName);
 //            client.setDate_of_birth(convert(dateOfBirth));
