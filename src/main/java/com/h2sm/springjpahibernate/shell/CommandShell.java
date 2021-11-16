@@ -1,6 +1,7 @@
 package com.h2sm.springjpahibernate.shell;
 
 import com.h2sm.springjpahibernate.entities.Client;
+import com.h2sm.springjpahibernate.services.console.ConsoleUI;
 import com.h2sm.springjpahibernate.services.database.ClientDBServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class CommandShell {
     private final ClientDBServiceImpl service;
+    private final ConsoleUI ui;
 
     @ShellMethod(value = "getall clients", key = {"get-all"})
     public void getAllClients() {
@@ -36,7 +38,11 @@ public class CommandShell {
 
     @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DD
     public void modifyClient(@ShellOption(value = "--id") int id) {
-        service.update(id);
+        var c = service.getByID(id);
+        if (c.isPresent()) {
+            var modifiedClient = getModifiedClient(c.get());
+            service.update(modifiedClient);
+        }
 
     }
 
@@ -46,10 +52,19 @@ public class CommandShell {
                           @ShellOption String phoneNumber,
                           @ShellOption String dateOfBirth) {
         var c = new Client(fullName, passport, phoneNumber, dateOfBirth);
-        System.out.println(c);
         service.save(c);
     }
 
-
+    private Client getModifiedClient(Client c) {
+        ui.say("Обновите имя");
+        c.setFullName(ui.read());
+        ui.say("Обновите паспорт");
+        c.setPassport(ui.read());
+        ui.say("обновите номер телефона");
+        c.setPhoneNumber(ui.read());
+        ui.say("обновите дату рождения: dd-MM-yyyy");
+        c.setDate(ui.read());
+        return c;
+    }
 
 }

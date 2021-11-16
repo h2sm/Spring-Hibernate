@@ -1,6 +1,5 @@
 package com.h2sm.springjpahibernate.services.database;
 
-import com.h2sm.springjpahibernate.services.functionality.UpdateFunction;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ClientDBServiceImpl implements ServiceInterface<Client> {
-    private UpdateFunction func = new UpdateFunction();
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -42,13 +40,13 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
-    public void update(int id) {
-        var clientOptional  = getByID(id);
+    public void update(Client entity) {
+        var clientOptional  = getByID(entity.getId());
         if (clientOptional.isPresent()) {
-            var client = UpdateFunction.updateClient(clientOptional.get());
             var session = sessionFactory.openSession();
             session.beginTransaction();
-            session.update(client);
+            //session.update(client);
+            session.saveOrUpdate(clientOptional.get());
             commitAndClose(session);
         }
     }

@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface ServiceInterface<T> {
     List<T> getAll();
     Optional<T> getByID(int id);
-    void update(int id);
+    void update(T entity);
     void delete(int id);
     void save(T entity);
 }
