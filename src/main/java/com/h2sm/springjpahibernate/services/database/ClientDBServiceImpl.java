@@ -40,6 +40,7 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
+    @Transactional
     public void update(Client entity) {
 
         System.out.println(entity + " service !!");
