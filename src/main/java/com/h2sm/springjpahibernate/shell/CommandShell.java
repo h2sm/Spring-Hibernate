@@ -36,11 +36,12 @@ public class CommandShell {
 
     }
 
-    @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DD
+    @ShellMethod(value = "modify client", key = {"mod-cli"}) //YYYY-MM-DDmod-climid
     public void modifyClient(@ShellOption(value = "--id") int id) {
         var c = service.getByID(id);
         if (c.isPresent()) {
             var modifiedClient = getModifiedClient(c.get());
+            System.out.println(modifiedClient + " modified in shell");
             service.update(modifiedClient);
         }
 

@@ -41,14 +41,12 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
 
     @Override
     public void update(Client entity) {
-        var clientOptional  = getByID(entity.getId());
-        if (clientOptional.isPresent()) {
-            var session = sessionFactory.openSession();
-            session.beginTransaction();
-            //session.update(client);
-            session.saveOrUpdate(clientOptional.get());
-            commitAndClose(session);
-        }
+
+        System.out.println(entity + " service !!");
+        var session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(entity);
+        commitAndClose(session);
     }
 
     @Override
