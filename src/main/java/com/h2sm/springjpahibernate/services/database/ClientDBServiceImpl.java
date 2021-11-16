@@ -21,6 +21,7 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     private SessionFactory sessionFactory;
 
     @Override
+    @Transactional
     public List<Client> getAll() {
         var session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -32,6 +33,7 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
+    @Transactional
     public Optional<Client> getByID(int id) {
         var session = sessionFactory.openSession();
         var client = session.get(Client.class, id);
@@ -51,6 +53,7 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         var clientOptional = getByID(id);
         if (clientOptional.isPresent()){
@@ -62,6 +65,7 @@ public class ClientDBServiceImpl implements ServiceInterface<Client> {
         }
     }
 
+    @Transactional
     @Override
     public void save(Client entity) {
         var session = sessionFactory.openSession();

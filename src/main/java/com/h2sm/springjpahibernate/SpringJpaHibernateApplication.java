@@ -8,14 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableJpaRepositories
-
 public class SpringJpaHibernateApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringJpaHibernateApplication.class, args);
-
     }
-
-
-
 }
